@@ -1,15 +1,20 @@
 # 🌐 Simulação de Rede TCP/IP - Conceitos Avançados
 
-Uma demonstração educacional interativa dos conceitos fundamentais e avançados do protocolo TCP (Transmission Control Protocol) através de simulação de pacotes de rede em JavaScript/Node.js.
+Uma demonstração educacional interativa dos conceitos fundamentais e avançados do protocolo TCP (Transmission Control Protocol) através de simulação de pacotes de rede em **JavaScript** e **TypeScript** com Node.js.
+
+**Versões Disponíveis:**
+- 📄 **JavaScript** (`NetworkPacket.js`) - Versão original, sem dependências
+- ✨ **TypeScript** (`NetworkPacket.ts`) - Versão com tipagem forte completa
 
 ## 📚 Índice
 
 1. [Visão Geral](#visão-geral)
-2. [Como Executar](#como-executar)
-3. [Arquitetura](#arquitetura)
-4. [Conceitos TCP Explicados](#conceitos-tcp-explicados)
-5. [Fluxo de Execução](#fluxo-de-execução)
-6. [Exemplos de Saída](#exemplos-de-saída)
+2. [Versões Disponíveis](#versões-disponíveis)
+3. [Como Executar](#como-executar)
+4. [Arquitetura](#arquitetura)
+5. [Conceitos TCP Explicados](#conceitos-tcp-explicados)
+6. [Fluxo de Execução](#fluxo-de-execução)
+7. [Exemplos de Saída](#exemplos-de-saída)
 
 ---
 
@@ -27,16 +32,69 @@ Este projeto implementa uma simulação educacional de uma rede TCP/IP, demonstr
 
 ---
 
+## 📦 Versões Disponíveis
+
+### JavaScript (`NetworkPacket.js`)
+```bash
+# Executar diretamente
+node NetworkPacket.js
+```
+- ✅ Sem dependências externas
+- ✅ Executa imediatamente
+- ❌ Sem verificação de tipos
+- ⚡ Ideal para aprendizado rápido
+
+### TypeScript (`NetworkPacket.ts`) ✨ NOVO
+```bash
+# Opção 1: Executar compilado (Recomendado)
+node dist/NetworkPacket.js
+
+# Opção 2: Executar TypeScript direto
+npm run dev
+
+# Opção 3: Compilar manualmente
+npm run build
+npm start
+```
+- ✅ Tipagem forte completa
+- ✅ Detecção de erros em compile-time
+- ✅ IntelliSense perfeito
+- ✅ Documentação automática (JSDoc)
+- ✅ Production-ready
+- 📦 Requer compilação (ou ts-node)
+
+**Para usar TypeScript, instale as dependências:**
+```bash
+npm install
+```
+
+---
+
 ## 🚀 Como Executar
 
 ### Pré-requisitos
 - Node.js v12 ou superior instalado
+- (Opcional) npm packages para TypeScript - `npm install`
 
-### Execução
+### Execução Rápida
 
+**JavaScript (sem setup):**
 ```bash
 cd c:\Users\aluga.com\Projects\IntrRedes
 node NetworkPacket.js
+```
+
+**TypeScript (com tipagem):**
+```bash
+cd c:\Users\aluga.com\Projects\IntrRedes
+npm install    # (primeira vez apenas)
+npm run dev    # Executa TypeScript direto
+```
+
+Ou compilar e executar:
+```bash
+npm run build  # Compila para dist/
+npm start      # Executa versão compilada
 ```
 
 ### Saída Esperada
@@ -57,57 +115,126 @@ node NetworkPacket.js
 
 ## 🏗️ Arquitetura
 
-### Classes Principais
+### Estrutura do Projeto
+
+```
+IntrRedes/
+├── NetworkPacket.js          # Versão JavaScript (original)
+├── NetworkPacket.ts          # Versão TypeScript ✨ (com tipagem)
+├── dist/
+│   └── NetworkPacket.js      # Compilado (gerado após npm run build)
+├── package.json              # Dependências
+├── tsconfig.json             # Configuração TypeScript
+├── README.md                 # Este arquivo
+├── TYPESCRIPT_GUIDE.md       # Guia detalhado TypeScript
+├── SUMMARY.md                # Resumo executivo
+└── node_modules/             # Dependências instaladas
+```
+
+### Classes Principais (Versão TypeScript com Tipagem)
 
 #### 1. **NetworkPacket**
 Representa um pacote IP/TCP na rede.
 
-```javascript
-{
-  source: string,              // Endereço de origem
-  destination: string,         // Endereço de destino
-  data: string,               // Payload/dados
-  sequenceNumber: number,     // Número de sequência (32-bit)
-  acknowledgmentNumber: number, // Número de confirmação
-  windowSize: number,         // Tamanho da janela TCP
-  ttl: number,               // Time To Live (hops restantes)
-  flags: {
-    SYN: boolean,            // Sincronização
-    ACK: boolean,            // Confirmação
-    FIN: boolean,            // Finalização
-    RST: boolean,            // Reset
-    PSH: boolean,            // Push (dados prontos)
-    URG: boolean             // Urgente
-  },
-  timestamp: string           // ISO timestamp
+```typescript
+// TypeScript com tipos completos
+class NetworkPacket {
+  public readonly source: string;
+  public readonly destination: string;
+  public readonly data: string;
+  public readonly protocol: string;
+  public readonly ttl: number;
+  public readonly id: string;
+  public sequenceNumber: number;
+  public acknowledgmentNumber: number;
+  public windowSize: number;
+  public flags: TCPFlags;
+  
+  toString(): string;
+}
+
+interface TCPFlags {
+  SYN: boolean;  // Sincronização
+  ACK: boolean;  // Confirmação
+  FIN: boolean;  // Finalização
+  RST: boolean;  // Reset
+  PSH: boolean;  // Push
+  URG: boolean;  // Urgente
 }
 ```
 
 #### 2. **NetworkNode**
 Representa um dispositivo na rede (cliente, roteador, servidor).
 
-```javascript
-{
-  id: string,                    // Identificador do nó
-  type: string,                  // "client" | "router" | "server"
-  routingTable: Map,            // Tabela de roteamento
-  connections: Map,             // Conexões ativas
-  congestionWindow: number,     // CWND - Controle de congestionamento
-  slowStartThreshold: number,   // SSTHRESH
-  buffer: Array                 // Buffer de pacotes
+```typescript
+// TypeScript com tipos completos
+class NetworkNode {
+  private id: string;
+  private type: NodeType;
+  private routingTable: Map<string, RouteEntry>;
+  private connections: Map<string, ConnectionInfo>;
+  
+  // Métodos principais
+  initiateConnection(destination: string): NetworkPacket;
+  respondWithSynAck(packet: NetworkPacket): NetworkPacket;
+  confirmConnection(packet: NetworkPacket): NetworkPacket;
+  send(packet: NetworkPacket): void;
+  receive(packet: NetworkPacket): void;
+  updateCongestionWindow(ackReceived?: boolean): void;
+}
+
+type NodeType = "client" | "router" | "server";
+
+interface ConnectionInfo {
+  state: "SYN_SENT" | "SYN_RECEIVED" | "ESTABLISHED" | "CLOSED";
+  seqNum: number;
+  ackNum: number;
+  windowSize: number;
 }
 ```
 
 #### 3. **Network**
-Gerencia a simulação da rede completa.
+Gerencia a simulação completa da rede TCP/IP.
 
-```javascript
-{
-  nodes: Map,                   // Nós conectados
-  activePackets: Array,         // Pacotes em trânsito
-  statistics: Object            // Estatísticas de rede
+```typescript
+class Network {
+  private nodes: Map<string, NetworkNode>;
+  private activePackets: NetworkPacket[];
+  private statistics: NetworkStatistics;
+  
+  // Métodos principais
+  addNode(id: string, type: NodeType): NetworkNode;
+  addRoute(from: string, to: string, nextHop: string, distance: number): void;
+  establishConnection(source: string, destination: string): void;
+  sendPacket(source: string, destination: string, data: string, protocol?: string): void;
+  closeConnection(source: string, destination: string): void;
+  showStatistics(): void;
+  getStatistics(): NetworkStatistics;
+}
+
+interface NetworkStatistics {
+  totalPackets: number;
+  totalBytes: number;
+  droppedPackets: number;
+  retransmissions: number;
 }
 ```
+
+---
+
+### Comparação: JavaScript vs TypeScript
+
+| Recurso | JavaScript | TypeScript |
+|---------|-----------|-----------|
+| **Tipagem** | ❌ Nenhuma | ✅ Completa |
+| **Interfaces** | ❌ Não | ✅ Sim (4 interfaces) |
+| **Type Aliases** | ❌ Não | ✅ Sim (NodeType) |
+| **Encapsulamento** | 🟡 Por convenção | ✅ Nativo (private/public) |
+| **IntelliSense** | 🟡 Parcial | ✅ Completo |
+| **Detecção de erros** | ❌ Runtime | ✅ Compile-time |
+| **Refatoração** | 🟡 Manual | ✅ Segura |
+| **Dependências** | 0 | npm install required |
+| **Build** | Nenhum | TypeScript → JavaScript |
 
 ---
 
@@ -573,6 +700,14 @@ Criado como material educacional para demonstrar conceitos fundamentais de TCP/I
 
 Este projeto é de código aberto e disponível para fins educacionais.
 
+## 🎓 Guias Adicionais
+
+Para informações detalhadas sobre como usar a versão TypeScript, consulte:
+
+- **[TYPESCRIPT_GUIDE.md](TYPESCRIPT_GUIDE.md)** - Guia completo de uso do TypeScript
+- **[SUMMARY.md](SUMMARY.md)** - Resumo executivo e quick-start
+- **[package.json](package.json)** - Scripts disponíveis (build, dev, start, watch, clean)
+
 ---
 
-**Última atualização:** Março 2026 | **Versão:** 2.0
+**Última atualização:** Abril 2026 | **Versão:** 2.0 TypeScript + JavaScript

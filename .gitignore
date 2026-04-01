@@ -1,0 +1,150 @@
+# ============================================
+# Node.js / npm
+# ============================================
+
+# Dependencies
+node_modules/
+npm-debug.log*
+npm-debug.log
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# ============================================
+# TypeScript
+# ============================================
+
+# Compiled JavaScript output
+dist/
+build/
+out/
+*.js.map
+*.d.ts.map
+
+# TypeScript cache
+*.tsbuildinfo
+
+# ============================================
+# IDE / Editor
+# ============================================
+
+# VS Code
+.vscode/
+*.code-workspace
+.history/
+.idea/
+
+# Visual Studio
+.vs/
+*.user
+*.sln.docstates
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# WebStorm / PyCharm / Other IDEs
+.idea/
+.gradle
+.classpath
+.project
+.settings/
+*.iml
+*.iws
+*.ipr
+
+# Emacs / Vim
+*~
+.#*
+*.swp
+*.swo
+*~.nib
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xcworkspace
+xcuserdata/
+
+# ============================================
+# OS Specific
+# ============================================
+
+# Windows
+Thumbs.db
+*.lnk
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.Trash-*
+
+# ============================================
+# Project Specific
+# ============================================
+
+# Compiled output (ao invés de dist/)
+/dist
+/build
+/out
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+
+# Logs
+logs/
+*.log
+lerna-debug.log*
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Coverage reports
+coverage/
+.nyc_output/
+
+# Testing
+.test/
+test-results/
+
+# ============================================
+# Documentation
+# ============================================
+
+# Markdown backups (se não quiser versionar)
+# *.md.bak
+
+# OS temp files in docs
+docs/.DS_Store
+
+# ============================================
+# Runtime Files
+# ============================================
+
+# Process manager
+.pm2/
+ecosystem.config.js.bak
+
+# Cache
+.cache/
+.eslintcache
+
+# ============================================
+# Comments
+# ============================================
+
+# Este .gitignore está otimizado para:
+# - Projetos Node.js / TypeScript
+# - VS Code + IDE padrão
+# - Sistemas operacionais (Windows, macOS, Linux)
+# - Dependências npm e artefatos de build

@@ -1,0 +1,29 @@
+{
+  "name": "intrRedes-tcp-simulator",
+  "version": "2.0.0",
+  "description": "Simulação educacional de rede TCP/IP com conceitos avançados",
+  "main": "dist/NetworkPacket.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/NetworkPacket.js",
+    "dev": "ts-node NetworkPacket.ts",
+    "watch": "tsc --watch",
+    "clean": "rimraf dist"
+  },
+  "keywords": [
+    "TCP",
+    "IP",
+    "Network",
+    "Simulation",
+    "Educational",
+    "TypeScript"
+  ],
+  "author": "Simulação Educacional",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "ts-node": "^10.9.0",
+    "rimraf": "^5.0.0"
+  }
+}
